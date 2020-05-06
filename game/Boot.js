@@ -3,7 +3,10 @@ var GameBoard = {};
 GameBoard.Boot = function(game) {};
 
 GameBoard.Boot.prototype = {
-	preload: function() {},
+	preload: function() {
+        this.load.image('preloadBar', 'images/loader_bar.png');
+        this.load.image('titleimage', 'images/TitleImage.png');
+    },
 	create: function() {
 		this.input.maxPointers = 1;   // only one cursor   
 		this.stage.disableVisibilityChange = false;   // pause game on tab change       
@@ -16,5 +19,6 @@ GameBoard.Boot.prototype = {
 		this.scale.setScreenSize(true);   // true will force screen resize no matter what
 		this.input.addPointer();  // cooresponding to the one cursor we defined above
 		this.stage.backgroundColor = '#171642';
+        this.state.start('Preloader');
 	}
 };

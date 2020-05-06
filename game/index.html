@@ -4,8 +4,14 @@
 	<meta charset="utf-8">
 	<title>The Best Game Ever</title>
     
-    <!-- TODO: jconnelly replace w/minified version for deployment -->
+    <!-- Inlude Phaser Framework (use minified version for release) -->
     <script src="libs/phaser.js"></script>
+    
+    <!-- Inlude Boot that Initializes our Game Instance -->
+    <script src="Boot.js"></script>    
+    
+    <!-- Inlude Preloader State Loads Game Assets  -->
+    <script src="Preloader.js"></script>   
     
 	<style>
 		body {
@@ -16,6 +22,21 @@
 	</style>
 </head>
 <body>
-
+    
+    <!-- Create Game Instance -->
+    <div id="gameContainer"></div>
+    
+    <!-- Bind Game Instance to Functions -->
+    <script type="text/javascript">
+        window.onload = function() {
+            var width = 650;
+            var height = 1000;
+            var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameContainer');
+            game.state.add('Boot', GameBoard.Boot);
+            game.state.add('Preloader', GameBoard.Preloader);
+            game.state.start('Boot');
+        }
+    </script>
+    
 </body>
 </html>
