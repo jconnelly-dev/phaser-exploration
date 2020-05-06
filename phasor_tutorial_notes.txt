@@ -2,17 +2,37 @@
 = TUTORIAL NOTES:								=
 =================================================================================
 
-Flash professional: to generate image assets.
-Up and Running with Flash Profession CC with Anastasia McCune
+Adoby Flash Professional: to generate image assets.
+- Up and Running with Flash Profession CC with Anastasia McCune
+- how to use the paint bucket -> https://www.youtube.com/watch?v=gSlsoKkjG5s
+
+FLA: flash document file
+
+How to use gradients in Adobe Animate - HTML5 Banner Ads in Adobe Animate 
+https://www.youtube.com/watch?v=1US06rgkjDE
 
 Text editor (he uses in tutorial): Brackets, http://brackets.io
-other suggestions Eclipse, SublimeText, DreamWeaver, EdgeCode
+- other suggestions Eclipse, SublimeText, DreamWeaver, EdgeCode
+- no external webserver needed to test since LivePreview contains an internal server
 
 Phaser: HTML5 game development framework for both desktop and mobile
-http://phaser.io
+- http://phaser.io
 
 THREE FILES THAT ARE REQUIRED IN PROJECT:
 phaser.js: un-minified javascript phasor framework
 phaser.map: intended to help mitigate warning msgs from browsers
 phaser.min.js: minified framework, should use when distributing the project
 
+Phasor can use either system or bitmap fonts to display dynamic text
+- we need a .png containing all the font characters, then 
+- .fnt that is an xml definition of where to find specific characters in the png
+
+littera: suggested free software for converting fonts to bitmap fonts
+- http://kvazars.com/littera
+
+Phasor allows the use of multiple sound channels to be used at the same time
+- i.e. background music and sound effects
+- so we can deploy direct sound files into the project
+
+AS3SFXR generator: creates .wav file for game sound effects
+http://www.superflashbros.net/as3sfxr
