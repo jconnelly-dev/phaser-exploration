@@ -1,0 +1,33 @@
+ADD TO Game.js
+
+this.overmessage;
+this.secondsElapsed;
+this.timer;
+
+-- create
+this.secondsElapsed = 0;
+this.timer = this.time.create(false);
+this.timer.loop(1000, this.updateSeconds, this);
+
+
+ADD TO Game.js
+updateSeconds: function() {
+	this.secondsElapsed++;
+},
+
+
+-- buildWorld
+this.timer.start();
+
+
+-- checkBunniesLeft[if bunnies is 0]
+this.overmessage = this.add.bitmapText(this.world.centerX-180, this.world.centerY-40, 'eightbitwonder', 'GAME OVER\n\n' + this.secondsElapsed, 42);
+this.overmessage.align = "center";
+this.overmessage.inputEnabled = true;
+this.overmessage.events.onInputDown.addOnce(this.quitGame, this);
+
+-- ADD
+
+quitGame: function(pointer) {
+    this.state.start('StartMenu');
+}, 

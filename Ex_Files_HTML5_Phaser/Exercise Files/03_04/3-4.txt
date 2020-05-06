@@ -1,0 +1,39 @@
+
+ADD TO Preloader.js :::
+
+--preload
+this.load.atlasXML('spacerock', 'images/spritesheets/SpaceRock.png', 'images/spritesheets/SpaceRock.xml');
+	
+
+
+
+ADD TO Game.js
+
+this.totalSpacerocks;
+this.spacerockgroup;
+
+-- create
+this.totalSpacerocks = 13;
+
+-- buildWorld
+this.buildSpaceRocks();
+
+-- ADD
+buildSpaceRocks: function() {
+    this.spacerockgroup = this.add.group();
+    for(var i=0; i<this.totalSpacerocks; i++) {
+        var r = this.spacerockgroup.create(this.rnd.integerInRange(0, this.world.width), this.rnd.realInRange(-1500, 0), 'spacerock', 'SpaceRock0000');
+        var scale = this.rnd.realInRange(0.3, 1.0);
+        r.scale.x = scale;
+        r.scale.y = scale;
+        this.physics.enable(r, Phaser.Physics.ARCADE);
+        r.enableBody = true;
+        r.body.velocity.y = this.rnd.integerInRange(200, 400);
+        r.animations.add('Fall');
+        r.animations.play('Fall', 24, true);
+    }
+
+},
+
+
+	

@@ -1,0 +1,30 @@
+
+
+ADD TO Preloader.js :::
+
+--preload
+this.load.image('ghost', 'images/ghost.png');
+
+
+
+
+ADD TO Game.js
+
+-- ADD
+makeGhost: function(b) {
+    bunnyghost = this.add.sprite(b.x-20, b.y-180, 'ghost');
+    bunnyghost.anchor.setTo(0.5, 0.5);
+    bunnyghost.scale.x = b.scale.x
+    this.physics.enable(bunnyghost, Phaser.Physics.ARCADE);
+    bunnyghost.enableBody = true;
+    bunnyghost.checkWorldBounds = true;
+    bunnyghost.body.velocity.y = -800;
+},
+
+
+-- bunnyCollision
+this.makeGhost(b);
+
+-- friendlyFire
+this.makeGhost(b);
+

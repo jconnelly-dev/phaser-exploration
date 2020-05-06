@@ -1,0 +1,35 @@
+
+
+
+ADD TO Preloader.js :::
+
+--preload
+this.load.atlasXML('bunny', 'images/spritesheets/bunny.png', 'images/spritesheets/bunny.xml');
+
+
+
+
+ADD TO Game.js
+
+this.totalBunnies;
+this.bunnygroup;
+
+-- create
+this.totalBunnies = 20;
+
+-- buildWorld
+this.buildBunnies();
+
+-- ADD
+buildBunnies: function() {
+    this.bunnygroup = this.add.group();
+    this.bunnygroup.enableBody = true;
+    for(var i=0; i<this.totalBunnies; i++) {
+        var b = this.bunnygroup.create(this.rnd.integerInRange(-10, this.world.width-50), this.rnd.integerInRange(this.world.height-180, this.world.height-60), 'bunny', 'Bunny0000');
+        b.anchor.setTo(0.5, 0.5);
+        b.body.moves = false;
+        b.animations.add('Rest', this.game.math.numberArray(1,58));
+        b.animations.add('Walk', this.game.math.numberArray(68,107));
+        b.animations.play('Rest', 24, true);
+    }
+},

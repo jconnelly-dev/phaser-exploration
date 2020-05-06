@@ -1,3 +1,7 @@
+=================================================================================
+= TUTORIAL NOTES:								=
+=================================================================================
+
 Flash professional: to generate image assets.
 Up and Running with Flash Profession CC with Anastasia McCune
 

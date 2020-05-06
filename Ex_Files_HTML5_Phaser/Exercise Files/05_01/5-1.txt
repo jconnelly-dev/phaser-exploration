@@ -1,0 +1,20 @@
+ADD TO Game.js
+
+this.gameover;
+
+
+-- create
+this.gameover = false;
+
+
+-- respawnRock [wrap in conditional]
+if(this.gameover == false){}
+
+
+-- fireBurst[wrap in conditional]
+if(this.gameover == false){}
+
+
+-- checkBunniesLeft[replace comment]
+this.gameover = true;
+

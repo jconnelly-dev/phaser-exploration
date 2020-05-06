@@ -1,0 +1,12 @@
+ADD TO Game.js
+
+-- update
+this.physics.arcade.overlap(this.spacerockgroup, this.burst, this.burstCollision, null, this);
+//(object1, object2, overlapCallback, processCallback, callbackContext)
+
+
+-- ADD
+burstCollision: function(r, b) {
+    this.respawnRock(r);
+},
+

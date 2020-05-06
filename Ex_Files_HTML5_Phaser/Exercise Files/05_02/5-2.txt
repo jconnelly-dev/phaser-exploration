@@ -1,0 +1,14 @@
+ADD TO Game.js
+
+this.countdown;
+
+
+-- buildWorld
+this.countdown = this.add.bitmapText(10, 10, 'eightbitwonder', 'Bunnies Left ' + this.totalBunnies, 20);
+
+
+-- checkBunniesLeft
+[if bunnies is 0]
+this.countdown.setText('Bunnies Left 0');
+[add an else]
+this.countdown.setText('Bunnies Left ' + this.totalBunnies);

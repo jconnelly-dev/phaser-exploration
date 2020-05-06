@@ -1,0 +1,21 @@
+
+
+ADD TO Preloader.js :::
+
+--preload
+this.load.image('hill', 'images/hill.png');
+this.load.image('sky', 'images/sky.png');
+
+
+
+
+ADD TO Game.js
+	
+-- create
+this.buildWorld();
+
+--ADD
+buildWorld: function() {
+	this.add.image(0, 0, 'sky');
+	this.add.image(0, 800, 'hill');
+},

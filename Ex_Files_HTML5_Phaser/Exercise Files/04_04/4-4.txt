@@ -1,0 +1,14 @@
+ADD TO Game.js
+
+-- update
+this.physics.arcade.overlap(this.bunnygroup, this.burst, this.friendlyFire, null, this);
+
+	
+-- ADD
+friendlyFire: function(b, e) {
+    if(b.exists){
+        b.kill();
+        this.totalBunnies--;
+        this.checkBunniesLeft();
+    }
+},

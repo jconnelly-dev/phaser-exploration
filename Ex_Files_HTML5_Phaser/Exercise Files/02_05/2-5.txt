@@ -1,0 +1,23 @@
+CREATE Game.js
+
+
+BunnyDefender.Game = function(game) {};
+
+BunnyDefender.Game.prototype = {
+	
+	create: function() {},
+
+	update: function() {}
+	
+};
+
+
+
+ADD TO index.html :::
+
+--head
+<script src="Game.js"></script>
+
+--onload
+game.state.add('Game', BunnyDefender.Game);
+

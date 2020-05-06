@@ -1,0 +1,21 @@
+ADD TO Game.js
+
+-- update
+this.physics.arcade.overlap(this.spacerockgroup, this.bunnygroup, this.bunnyCollision, null, this);
+
+	
+-- ADD
+bunnyCollision: function(r, b) {
+    if(b.exists){
+        this.respawnRock(r);
+        b.kill();
+        this.totalBunnies--;
+        this.checkBunniesLeft();
+    }
+},
+
+checkBunniesLeft: function() {
+    if(this.totalBunnies <= 0){
+        // GAME OVER
+    }
+},

@@ -1,0 +1,37 @@
+
+
+
+ADD TO Preloader.js :::
+
+--preload
+this.load.image('explosion', 'images/explosion.png');
+
+
+
+
+
+ADD TO Game.js
+
+this.burst;
+
+
+-- buildWorld
+this.buildEmitter();
+
+
+-- ADD
+buildEmitter:function() {
+    this.burst = this.add.emitter(0, 0, 80);
+    this.burst.minParticleScale = 0.3;
+    this.burst.maxParticleScale = 1.2;
+    this.burst.minParticleSpeed.setTo(-30, 30);
+    this.burst.maxParticleSpeed.setTo(30, -30);
+    this.burst.makeParticles('explosion');
+    this.input.onDown.add(this.fireBurst, this);
+},
+
+fireBurst: function(pointer) {
+    this.burst.emitX = pointer.x;
+    this.burst.emitY = pointer.y;
+    this.burst.start(true, 2000, null, 20); //(explode, lifespan, frequency, quantity)
+},
