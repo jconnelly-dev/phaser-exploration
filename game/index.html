@@ -13,12 +13,18 @@
     <!-- Inlude Preloader State Loads Game Assets  -->
     <script src="Preloader.js"></script>   
     
+    <!-- Inlude Start Menu for Background & Prompt  -->
+    <script src="StartMenu.js"></script>      
+    
+    <!-- Inlude Game Logic  -->
+    <script src="Game.js"></script>         
+    
 	<style>
 		body {
 			padding: 0;
 			margin: 0;
 			background-color: #000000;
-		}
+		}     
 	</style>
 </head>
 <body>
@@ -29,14 +35,16 @@
     <!-- Bind Game Instance to Functions -->
     <script type="text/javascript">
         window.onload = function() {
-            var width = 650;
-            var height = 1000;
+            var width = 750;//540;
+            var height = 1000;//960;
             var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameContainer');
             game.state.add('Boot', GameBoard.Boot);
             game.state.add('Preloader', GameBoard.Preloader);
+            game.state.add('StartMenu', GameBoard.StartMenu);
+            game.state.add('Game', GameBoard.Game);
             game.state.start('Boot');
         }
-    </script>
+    </script>   
     
 </body>
 </html>
