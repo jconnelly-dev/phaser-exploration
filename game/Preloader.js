@@ -19,6 +19,8 @@ GameBoard.Preloader.prototype = {
         this.load.image('title', 'images/title_circle.png');
         this.load.image('landscape', 'images/landscape-background.png');
         this.load.image('character', 'images/cyb_guy.gif');
+        
+        this.load.atlasXML('bunny', 'images/spritesheets/bunny.png', 'images/spritesheets/bunny.xml');
 	},
 
 	create: function () {
