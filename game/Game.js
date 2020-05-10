@@ -14,6 +14,9 @@ GameBoard.Game = function(game) {
     this.countDown;
     this.elapsedTime;
     this.timer;
+    
+    this.boom;
+    this.ding;
 };
 
 GameBoard.Game.prototype = {
@@ -21,7 +24,8 @@ GameBoard.Game.prototype = {
     create: function() {
         this.gameOver = false;
         this.elapsedTime = 0;
-        this.enemySpeed = 3000;
+        this.enemySpeed = 3000; // the time it take for an enemy to complete its random path.
+        this.totalBunnies = 20;
         
         // Create a phasor timer and have it invoke a function every 1 milisecond.
         this.timer = this.time.create(false);
@@ -29,13 +33,15 @@ GameBoard.Game.prototype = {
         
         this.walkWay = 367;   
         this.enemyMaxBoundsY = 320;
-        
         this.charStartX = 35;
         this.charStartY = this.walkWay;
         this.xBoaderLength = 50;
         this.yBoaderLength = 60;
         
-        this.totalBunnies = 20;
+        this.ding = this.add.audio('select_audio');        
+        this.boom = this.add.audio('explosion_audio');
+        this.boom.volume = 0.2;
+        
         this.buildWorld();
     },
     
@@ -116,6 +122,8 @@ GameBoard.Game.prototype = {
     
     fireBurst: function(clickLocation) {
         if (this.gameOver == false) {
+            this.boom.play();            
+            
             this.burst.emitX = clickLocation.x;
             this.burst.emitY = clickLocation.y;
 
@@ -154,6 +162,7 @@ GameBoard.Game.prototype = {
     },
     
     quitGame: function() {
+        this.ding.play();
         this.state.start('StartMenu');
     },
     

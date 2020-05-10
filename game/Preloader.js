@@ -22,6 +22,9 @@ GameBoard.Preloader.prototype = {
         
         this.load.atlasXML('bunny', 'images/spritesheets/bunny.png', 'images/spritesheets/bunny.xml');
         this.load.image('explosion', 'images/explosion.png');
+        
+        this.load.audio('explosion_audio', 'audio/explosion.mp3');
+        this.load.audio('select_audio', 'audio/select.mp3');      
 	},
 
 	create: function () {
@@ -29,7 +32,9 @@ GameBoard.Preloader.prototype = {
 	},
 
 	update: function () {
-	   	this.ready = true;
-        this.state.start('StartMenu');
+        if (this.cache.isSoundDecoded('select_audio') && this.ready == false) {
+            this.ready = true;
+            this.state.start('StartMenu');            
+        }
 	}
 };
