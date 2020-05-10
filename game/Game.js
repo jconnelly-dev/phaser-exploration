@@ -1,18 +1,18 @@
 GameBoard.Game = function(game) {
     this.walkWay;
     this.enemyMaxBoundsY;
-    
     this.charStartX;
     this.charStartY;
     this.xBoaderLength;
     this.yBoaderLength;
     
+    this.enemySpeed;
     this.burst;
     this.totalBunnies;
     this.bunnyGroup;
     this.gameOver;
     this.countDown;
-    this.miliSecondsElapsed;
+    this.elapsedTime;
     this.timer;
 };
 
@@ -20,7 +20,8 @@ GameBoard.Game.prototype = {
     
     create: function() {
         this.gameOver = false;
-        this.miliSecondsElapsed = 0;
+        this.elapsedTime = 0;
+        this.enemySpeed = 3000;
         
         // Create a phasor timer and have it invoke a function every 1 milisecond.
         this.timer = this.time.create(false);
@@ -39,7 +40,7 @@ GameBoard.Game.prototype = {
     },
     
     updateGameTime: function() {
-        this.miliSecondsElapsed++;
+        this.elapsedTime++;
     },
     
     buildWorld: function() {
@@ -73,7 +74,7 @@ GameBoard.Game.prototype = {
         bposition = Math.floor(randDestinationX);
         
         // Create a random delay in which the object will begin moving.
-        bdelay = this.rnd.integerInRange(2000, 6000); // 2:6 seconds.
+        bdelay = this.rnd.integerInRange(10, 500); // 10 ms : 0.5 seconds.
         
         // Face (flip) this object towards the direction of the position its moving towards.
         if (bposition < enemy.x){
@@ -82,8 +83,8 @@ GameBoard.Game.prototype = {
             enemy.scale.x = -1;
         }
         
-        // Move along x-axis towards our defined position for 3.5 seconds w/natural movement and random delay.
-        t = this.add.tween(enemy).to({ x : bposition }, 3500, Phaser.Easing.Quadratic.InOut, true, bdelay);
+        // Move along x-axis towards our defined position for w/natural movement and random delay.
+        t = this.add.tween(enemy).to({ x : bposition }, this.enemySpeed, Phaser.Easing.Quadratic.InOut, true, bdelay);
         
         t.onStart.add(this.startBunny, this); // NOTE: "this" is the 'enemy' object here.
         t.onComplete.add(this.stopBunny, this);
@@ -143,7 +144,8 @@ GameBoard.Game.prototype = {
         this.countDown.setText('Bunnies Left ' + this.totalBunnies);
         if (this.totalBunnies <= 0) {
             this.gameOver = true;
-            var gameOverMsg = 'GAME OVER\n\n' + this.miliSecondsElapsed + ' ms';
+            var miliSeconds = (this.elapsedTime / 100).toFixed(3);
+            var gameOverMsg = 'GAME OVER\n\n' + miliSeconds + ' ms';
             this.overmessage = this.add.bitmapText(this.world.centerX - 150, this.walkWay - 250, 'eightbitwonder', gameOverMsg, 35);
             this.overmessage.align = "center";
             this.overmessage.inputEnabled = true; // allows users to click on text.
