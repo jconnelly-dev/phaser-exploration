@@ -110,7 +110,20 @@ GameBoard.Game.prototype = {
          * We can think about the emitter as the number of bullets on the screen at any given time.
          *  the burst.start() will define how many bullets are release to the screen per click/fire.
          */        
-    },    
+    },
     
-    update: function() {}
+    enemyCollision: function(enemy, burst) {
+        enemy.kill(); // remove sprite.
+        this.totalBunnies--;
+        this.checkBunniesLeft();
+    },
+    
+    checkBunniesLeft: function() {
+        // game over logic.
+    },
+    
+    update: function() {
+        // Invoke a function when phasor physicas engine detects collisions between groups.
+        this.physics.arcade.overlap(this.bunnygroup, this.burst, this.enemyCollision, null, this); // "this" callback context passes reference to groups @ time of collision.
+    }
 }
