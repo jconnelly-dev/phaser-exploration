@@ -21,6 +21,7 @@ GameBoard.Preloader.prototype = {
         this.load.image('character', 'images/cyb_guy.gif');
         
         this.load.atlasXML('bunny', 'images/spritesheets/bunny.png', 'images/spritesheets/bunny.xml');
+        this.load.image('explosion', 'images/explosion.png');
 	},
 
 	create: function () {

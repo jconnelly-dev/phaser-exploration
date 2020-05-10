@@ -7,6 +7,7 @@ GameBoard.Game = function(game) {
     this.xBoaderLength;
     this.yBoaderLength;
     
+    this.burst;
     this.totalBunnies;
     this.bunnyGroup;
 };
@@ -30,10 +31,11 @@ GameBoard.Game.prototype = {
         this.add.image(0, 0, 'landscape');
         this.add.image(this.charStartX, this.charStartY, 'character');
         this.buildBunnies();
+        this.buildEmitter();
     },
     
     buildBunnies: function() {
-        this.bunnygroup = this.add.group();
+        this.bunnygroup = this.add.group(); // define that this variable is a now a phasor group.
         this.bunnygroup.enableBody = true; // allows group to interact w/other objects using physics engine.
         for (var i = 0; i < this.totalBunnies; i++) {
             var randX = this.rnd.integerInRange(this.xBoaderLength, this.world.width - 50);
@@ -81,6 +83,33 @@ GameBoard.Game.prototype = {
         
         // Once this object has reached its destination, create a new one.
         this.assignBunnyMovement(enemy);
+    },    
+    
+    buildEmitter:function() {
+        // Use the burst image we preloaded as a phasor emitter object.
+        this.burst = this.add.emitter(0, 0, 40); // # of objects to hold in emitter.
+        this.burst.minParticleScale = 0.3;
+        this.burst.maxParticleScale = 1.2;
+        this.burst.minParticleSpeed.setTo(-30, 30); // create burst effect.
+        this.burst.maxParticleSpeed.setTo(30, -30);
+        this.burst.makeParticles('explosion');
+        this.input.onDown.add(this.fireBurst, this); // associate click/touch with function.
+    },
+    
+    fireBurst: function(clickLocation) {
+        this.burst.emitX = clickLocation.x;
+        this.burst.emitY = clickLocation.y;
+        
+        var numParticlesPerBurst = 20;
+        var particleLifeTime = 100; // milisecond.
+        
+        // Explode some number of particles to the screen for some duration for every burst event.
+        this.burst.start(true, particleLifeTime, null, numParticlesPerBurst);
+        
+        /*
+         * We can think about the emitter as the number of bullets on the screen at any given time.
+         *  the burst.start() will define how many bullets are release to the screen per click/fire.
+         */        
     },    
     
     update: function() {}
