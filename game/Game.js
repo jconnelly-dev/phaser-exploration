@@ -10,11 +10,22 @@ GameBoard.Game = function(game) {
     this.burst;
     this.totalBunnies;
     this.bunnyGroup;
+    this.gameOver;
+    this.countDown;
+    this.miliSecondsElapsed;
+    this.timer;
 };
 
 GameBoard.Game.prototype = {
     
     create: function() {
+        this.gameOver = false;
+        this.miliSecondsElapsed = 0;
+        
+        // Create a phasor timer and have it invoke a function every 1 milisecond.
+        this.timer = this.time.create(false);
+        this.timer.loop(1, this.updateGameTime, this); // "this" is a reference to the new phasor timer we just created.
+        
         this.walkWay = 367;   
         this.enemyMaxBoundsY = 320;
         
@@ -27,11 +38,17 @@ GameBoard.Game.prototype = {
         this.buildWorld();
     },
     
+    updateGameTime: function() {
+        this.miliSecondsElapsed++;
+    },
+    
     buildWorld: function() {
         this.add.image(0, 0, 'landscape');
         this.add.image(this.charStartX, this.charStartY, 'character');
         this.buildBunnies();
         this.buildEmitter();
+        this.countDown = this.add.bitmapText(this.xBoaderLength, this.world.height - 1.5 * this.yBoaderLength, 'eightbitwonder', 'Bunnies Left ' + this.totalBunnies, 20);
+        this.timer.start();
     },
     
     buildBunnies: function() {
@@ -85,7 +102,7 @@ GameBoard.Game.prototype = {
         this.assignBunnyMovement(enemy);
     },    
     
-    buildEmitter:function() {
+    buildEmitter: function() {
         // Use the burst image we preloaded as a phasor emitter object.
         this.burst = this.add.emitter(0, 0, 40); // # of objects to hold in emitter.
         this.burst.minParticleScale = 0.3;
@@ -97,14 +114,16 @@ GameBoard.Game.prototype = {
     },
     
     fireBurst: function(clickLocation) {
-        this.burst.emitX = clickLocation.x;
-        this.burst.emitY = clickLocation.y;
-        
-        var numParticlesPerBurst = 20;
-        var particleLifeTime = 100; // milisecond.
-        
-        // Explode some number of particles to the screen for some duration for every burst event.
-        this.burst.start(true, particleLifeTime, null, numParticlesPerBurst);
+        if (this.gameOver == false) {
+            this.burst.emitX = clickLocation.x;
+            this.burst.emitY = clickLocation.y;
+
+            var numParticlesPerBurst = 20;
+            var particleLifeTime = 100; // milisecond.
+
+            // Explode some number of particles to the screen for some duration for every burst event.
+            this.burst.start(true, particleLifeTime, null, numParticlesPerBurst);            
+        }
         
         /*
          * We can think about the emitter as the number of bullets on the screen at any given time.
@@ -113,13 +132,27 @@ GameBoard.Game.prototype = {
     },
     
     enemyCollision: function(enemy, burst) {
-        enemy.kill(); // remove sprite.
-        this.totalBunnies--;
-        this.checkBunniesLeft();
+        if (enemy != null && enemy.exists) {
+            this.totalBunnies--;
+            this.checkBunniesLeft();
+            enemy.kill(); // remove sprite.            
+        }
     },
     
     checkBunniesLeft: function() {
-        // game over logic.
+        this.countDown.setText('Bunnies Left ' + this.totalBunnies);
+        if (this.totalBunnies <= 0) {
+            this.gameOver = true;
+            var gameOverMsg = 'GAME OVER\n\n' + this.miliSecondsElapsed + ' ms';
+            this.overmessage = this.add.bitmapText(this.world.centerX - 150, this.walkWay - 250, 'eightbitwonder', gameOverMsg, 35);
+            this.overmessage.align = "center";
+            this.overmessage.inputEnabled = true; // allows users to click on text.
+            this.overmessage.events.onInputDown.addOnce(this.quitGame, this); // invoke function when clicked passing in click position pointer.
+        }
+    },
+    
+    quitGame: function() {
+        this.state.start('StartMenu');
     },
     
     update: function() {
