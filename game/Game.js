@@ -157,33 +157,61 @@ GameBoard.Game.prototype = {
             this.overmessage = this.add.bitmapText(this.world.centerX - 150, this.walkWay - 250, 'eightbitwonder', gameOverMsg, 35);
             this.overmessage.align = "center";
             this.overmessage.inputEnabled = true; // allows users to click on text.
-            //this.displayGameScoreLeaders();
+            this.displayGameScoreLeaders();
             this.overmessage.events.onInputDown.addOnce(this.quitGame, this); // invoke function when clicked passing in click position pointer.
         }
     },
     
-    /*
     displayGameScoreLeaders: function() {
-        var obj, dbParam, xmlhttp;
-        obj = { "limit":5 };
-        dbParam = JSON.stringify(obj);
-        xmlhttp = new XMLHttpRequest();
+        console.log("displayGameScoreLeaders ---");
+        
+        /*
+        $.ajax({
+            url: 'test.php',
+            method: "get",                
+            success: function(data) {
+                console.log("ajax baby");
+                console.log(data);
+                console.dir(data);
+            }
+        });      
+        */
+        
+        var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var dboGameScoreLeaders = this.responseText;
-            if (dboGameScoreLeaders != null) {
-                console.dir(dboGameScoreLeaders);
-                myObj = JSON.parse(this.responseText);
-                for (x in myObj) {
-                    //txt += myObj[x].name + "<br>";
-                    console.log(x);
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("ajax baby");
+                console.log(this.responseText);
+                console.dir(this.responseText);
+                //var myObj = JSON.parse(this.responseText);
+                //console.dir(myObj);              
+            }
+        };
+        xmlhttp.open("GET", "test.php", true);
+        xmlhttp.send();        
+        
+        /*
+        var obj = { "limit":5 };
+        var dbParam = JSON.stringify(obj);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var dboGameScoreLeaders = this.responseText;
+                console.log(this.responseText);
+                if (dboGameScoreLeaders != null) {
+                    console.dir(dboGameScoreLeaders);
+                    //myObj = JSON.parse(this.responseText);
+                    //for (x in myObj) {
+                        //txt += myObj[x].name + "<br>";
+                        //console.log(x);
+                    //}
                 }
             }
         };
-        xmlhttp.open("GET", "json_demo_db.php?x=" + dbParam, true);
+        xmlhttp.open("GET", "getuser.php?x=" + dbParam, true);
         xmlhttp.send();          
+        */
     },
-    */
     
     quitGame: function() {
         this.ding.play();

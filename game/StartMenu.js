@@ -24,6 +24,7 @@ GameBoard.StartMenu.prototype = {
 	},
 
 	startGame: function (pointer) {
+        //this.ding.resume();
         this.ding.play();
 		this.state.start('Game');      
 	}
