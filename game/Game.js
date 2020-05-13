@@ -12,11 +12,11 @@ GameBoard.Game = function(game) {
     this.bunnyGroup;
     this.gameOver;
     this.countDown;
-    this.playerName;
+    //this.playerName;
     this.highScoreTitle;
     this.highScores;
     this.elapsedTime;
-    this.timer;
+    this.timer;    
     
     this.boom;
     this.ding;
@@ -58,12 +58,20 @@ GameBoard.Game.prototype = {
         this.buildBunnies();
         this.buildEmitter();
         this.playerName = "-NA-";
+        /*
         if (this.playerName != null && this.playerName.length > 0 && this.playerName.length <= 4) {
             var inputBox = document.getElementById("playerName");
             this.playerName = inputBox.value;
             inputBox.setAttribute("type", "hidden");
         }
         console.log(this.playerName);
+        */
+        
+        /*
+        game.input.keyboard.on('keydown', function (event) {
+            console.log(event.code);
+        });  
+        */
         this.countDown = this.add.bitmapText(this.xBoaderLength, this.world.height - 1.5 * this.yBoaderLength, 'eightbitwonder', 'Bunnies Left ' + this.totalBunnies, 20);
         this.timer.start();
     },
@@ -172,7 +180,8 @@ GameBoard.Game.prototype = {
         }
     },
     
-    displayGameScoreLeaders: function() {
+    displayGameScoreLeaders: function() {            
+        
         var scoresStartY = this.walkWay + 3 * this.yBoaderLength;
         this.highScoreTitle = this.add.bitmapText(this.xBoaderLength, scoresStartY, 'eightbitwonder', 'High Scores', 40);
         

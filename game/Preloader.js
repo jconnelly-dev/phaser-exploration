@@ -24,7 +24,7 @@ GameBoard.Preloader.prototype = {
         this.load.image('explosion', 'images/explosion.png');
         
         this.load.audio('explosion_audio', 'audio/explosion.mp3');
-        this.load.audio('select_audio', 'audio/select.mp3');      
+        this.load.audio('select_audio', 'audio/select.mp3');   
 	},
 
 	create: function () {
