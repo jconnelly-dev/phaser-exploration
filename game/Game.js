@@ -177,18 +177,21 @@ GameBoard.Game.prototype = {
         });      
         */
         
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log("ajax baby");
-                console.log(this.responseText);
-                console.dir(this.responseText);
-                //var myObj = JSON.parse(this.responseText);
-                //console.dir(myObj);              
-            }
-        };
-        xmlhttp.open("GET", "test.php", true);
-        xmlhttp.send();        
+        try {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("ajax baby");
+                    console.dir(this.responseText);
+                    var myObj = JSON.parse(this.responseText);
+                    console.dir(myObj);              
+                }
+            };
+            xmlhttp.open("GET", "test.php", true);
+            xmlhttp.send();            
+        } catch (e) {
+            console.log("Exception occurred during php GET call.");
+        }        
         
         /*
         var obj = { "limit":5 };
