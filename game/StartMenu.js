@@ -18,7 +18,7 @@ GameBoard.StartMenu.prototype = {
         
 		startPrompt = this.add.bitmapText(this.world.centerX - 155, this.world.centerY + 250, 'eightbitwonder', 'Click to Start', 24);
         startPrompt.tint = 0xECEB5F;
-        
+
         this.ding = this.add.audio('select_audio');
         this.ding.volume = 0.2;        
 	},

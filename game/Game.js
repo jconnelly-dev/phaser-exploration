@@ -12,6 +12,7 @@ GameBoard.Game = function(game) {
     this.bunnyGroup;
     this.gameOver;
     this.countDown;
+    this.playerName;
     this.highScoreTitle;
     this.highScores;
     this.elapsedTime;
@@ -56,6 +57,13 @@ GameBoard.Game.prototype = {
         this.add.image(this.charStartX, this.charStartY, 'character');
         this.buildBunnies();
         this.buildEmitter();
+        this.playerName = "-NA-";
+        if (this.playerName != null && this.playerName.length > 0 && this.playerName.length <= 4) {
+            var inputBox = document.getElementById("playerName");
+            this.playerName = inputBox.value;
+            inputBox.setAttribute("type", "hidden");
+        }
+        console.log(this.playerName);
         this.countDown = this.add.bitmapText(this.xBoaderLength, this.world.height - 1.5 * this.yBoaderLength, 'eightbitwonder', 'Bunnies Left ' + this.totalBunnies, 20);
         this.timer.start();
     },
@@ -191,7 +199,6 @@ GameBoard.Game.prototype = {
         }];
         
         var boardText = this.shittyPrint(dboGameScoreLeaders);
-        console.log(boardText);
         this.highScores = this.add.bitmapText(this.xBoaderLength, scoresStartY + this.yBoaderLength, 'eightbitwonder', boardText, 20);        
         
         /*
