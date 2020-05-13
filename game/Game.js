@@ -12,6 +12,8 @@ GameBoard.Game = function(game) {
     this.bunnyGroup;
     this.gameOver;
     this.countDown;
+    this.highScoreTitle;
+    this.highScores;
     this.elapsedTime;
     this.timer;
     
@@ -163,57 +165,101 @@ GameBoard.Game.prototype = {
     },
     
     displayGameScoreLeaders: function() {
-        console.log("displayGameScoreLeaders ---");
+        var scoresStartY = this.walkWay + 3 * this.yBoaderLength;
+        this.highScoreTitle = this.add.bitmapText(this.xBoaderLength, scoresStartY, 'eightbitwonder', 'High Scores', 40);
+        
+        var dboGameScoreLeaders = [{ 
+            "GameScoreId":1,
+            "PlayerName":"joey",
+            "TimeElapsed":984
+        },{ 
+            "GameScoreId":2,
+            "PlayerName":"bob",
+            "TimeElapsed":1234
+        },{ 
+            "GameScoreId":3,
+            "PlayerName":"sue",
+            "TimeElapsed":2222
+        },{ 
+            "GameScoreId":4,
+            "PlayerName":"jake",
+            "TimeElapsed":5556
+        },{ 
+            "GameScoreId":5,
+            "PlayerName":"tony",
+            "TimeElapsed":9999
+        }];
+        
+        var boardText = this.shittyPrint(dboGameScoreLeaders);
+        console.log(boardText);
+        this.highScores = this.add.bitmapText(this.xBoaderLength, scoresStartY + this.yBoaderLength, 'eightbitwonder', boardText, 20);        
         
         /*
-        $.ajax({
-            url: 'test.php',
-            method: "get",                
-            success: function(data) {
-                console.log("ajax baby");
-                console.log(data);
-                console.dir(data);
-            }
-        });      
-        */
-        
         try {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log("ajax baby");
-                    console.dir(this.responseText);
-                    var myObj = JSON.parse(this.responseText);
-                    console.dir(myObj);              
+                    var dboGameScoreLeaders = JSON.parse(this.responseText);
+                    if (dboGameScoreLeaders != null && typeof dboGameScoreLeaders === "object") {
+                        var boardText = shittyPrint(dboGameScoreLeaders);
+                        this.highScores = this.add.bitmapText(this.xBoaderLength, scoresStartY, 'eightbitwonder', boardText, 20);
+                    }
                 }
             };
             xmlhttp.open("GET", "test.php", true);
             xmlhttp.send();            
         } catch (e) {
             console.log("Exception occurred during php GET call.");
-        }        
-        
-        /*
-        var obj = { "limit":5 };
-        var dbParam = JSON.stringify(obj);
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var dboGameScoreLeaders = this.responseText;
-                console.log(this.responseText);
-                if (dboGameScoreLeaders != null) {
-                    console.dir(dboGameScoreLeaders);
-                    //myObj = JSON.parse(this.responseText);
-                    //for (x in myObj) {
-                        //txt += myObj[x].name + "<br>";
-                        //console.log(x);
-                    //}
-                }
-            }
-        };
-        xmlhttp.open("GET", "getuser.php?x=" + dbParam, true);
-        xmlhttp.send();          
+        } 
         */
+    },
+    
+    shittyPrint: function(dboGameScoreLeaders) {
+        var rankCol = "Rank      ";
+        var rankLength = rankCol.length + 3;
+        var playerCol = "Player    ";
+        var playerLength = playerCol.length + 3;
+        var timeCol = "Time Elapsed";
+        var timeLength = timeCol.length;
+        
+        var boardText = rankCol + playerCol + timeCol;
+        for (var i = 0; i < dboGameScoreLeaders.length; i++) {
+            boardText += "\n";
+            var leader = dboGameScoreLeaders[i];
+            
+            if (leader != null) {
+                var idRow = "";
+                if (leader.GameScoreId != null && typeof(leader.GameScoreId) !== 'undefined') {
+                    idRow += leader.GameScoreId;
+                    while (idRow.length < rankLength) {
+                        idRow += " ";
+                    }                    
+                }
+                if (i == 0) {
+                    idRow += " ";
+                }
+
+                var nameRow = "";
+                if (leader.PlayerName != null && typeof(leader.PlayerName) !== 'undefined') {
+                    nameRow += leader.PlayerName;
+                    while (nameRow.length < playerLength) {
+                        nameRow += " ";
+                    }                    
+                }
+                
+                var timeRow = "";
+                if (leader.PlayerName != null && typeof(leader.PlayerName) !== 'undefined') {
+                    timeRow += leader.TimeElapsed;
+                    while (timeRow.length < timeLength) {
+                        timeRow += " ";
+                    }                      
+                }          
+
+                boardText += idRow + nameRow + timeRow;              
+            }
+        }
+        
+        return boardText;
     },
     
     quitGame: function() {
